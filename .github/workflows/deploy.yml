@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -20,9 +20,8 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa ubuntu@3.8.119.42 << 'EOF'
             cd /path/to/your/app
             git pull origin main
             docker-compose up -d  # Or any other deployment command
           EOF
- 
