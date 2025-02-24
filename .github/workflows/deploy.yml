@@ -20,6 +20,12 @@ jobs:
 
       - name: Deploy to EC2
         run: |
+          # Ensure the SSH private key is saved in the correct location
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Deploy commands
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.8.119.42 << 'EOF'
             cd /path/to/your/app
             git pull origin main
